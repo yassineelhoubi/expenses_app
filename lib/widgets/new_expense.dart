@@ -10,17 +10,25 @@ class NewExpense extends StatefulWidget {
 }
 
 class _NewExpenseState extends State<NewExpense> {
+  final _titleController = TextEditingController();
   @override
   Widget build(context) {
-    return const SizedBox(
+    return SizedBox(
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
-                maxLength: 50,
-                decoration: InputDecoration(label: Text("Title"))),
+              controller: _titleController,
+              maxLength: 50,
+              decoration: const InputDecoration(
+                label: Text("Title"),
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () => print(_titleController.text),
+                child: Text("click"))
           ],
         ),
       ),
