@@ -33,6 +33,28 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
+  void _submitExpenseData() {
+    final entredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = entredAmount == null || entredAmount <= 0;
+
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Invalid Input"),
+          content: const Text(
+              "Please make sure a valid title amounte date and category was entered."),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx), child: const Text("Okey"))
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(context) {
     return SizedBox(
@@ -104,12 +126,7 @@ class _NewExpenseState extends State<NewExpense> {
                     onPressed: () => Navigator.pop(context),
                     child: const Text("cancel")),
                 ElevatedButton(
-                    onPressed: () {
-                      print(_titleController.text);
-                      print(_amountController.text);
-                      print(_selectedDate);
-                      print(_selectedCategory);
-                    },
+                    onPressed: _submitExpenseData,
                     child: const Text("Save Expense")),
               ],
             )
